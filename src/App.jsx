@@ -6,7 +6,7 @@ const DESTINATIONS = [
     id: 'lonavala',
     name: 'Lonavala',
     region: 'Sahyadri Hills, Maharashtra',
-    heroImage: 'https://hblimg.mmtcdn.com/content/hubble/img/desttvimg/mmt/destination/t_trp/m_lonavala_tv_destination_img_2_l_664_1000.jpg?',
+    heroImage: 'https://images.unsplash.com/photo-1584811644167-a5448bb444ff?auto=format&fit=crop&w=1200&q=80',
     shortDescription: 'Mist-clad valleys, cascading waterfalls, and famous crispy chikki treats.',
     distance: '83 km',
     travelTime: '2h 15m',
@@ -60,7 +60,7 @@ const DESTINATIONS = [
     id: 'mahabaleshwar',
     name: 'Mahabaleshwar',
     region: 'Western Ghats, Maharashtra',
-    heroImage: 'https://c.ndtvimg.com/2025-01/7iqt18fg_mahabaleshwar_625x300_20_January_25.jpg?',
+    heroImage: 'https://images.unsplash.com/photo-1595655635130-f5ea78cbe33f?auto=format&fit=crop&w=1200&q=80',
     shortDescription: 'Endless strawberry farms, evergreen forests, and dramatic cliff viewpoints.',
     distance: '120 km',
     travelTime: '3h 30m',
@@ -114,7 +114,7 @@ const DESTINATIONS = [
     id: 'nashik',
     name: 'Nashik',
     region: 'Wine Capital, Maharashtra',
-    heroImage: 'https://studytoursindia.com/wp-content/uploads/2023/07/archana-more-AOSm9Cii6P4-unsplash-1300x1300.webp',
+    heroImage: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80',
     shortDescription: 'Rolling vineyards, wine-tasting estates, and serene lakeside dining.',
     distance: '165 km',
     travelTime: '3h 15m',
@@ -187,13 +187,13 @@ export default function WeekendPlannerApp() {
   // Planner Form State
   const [formData, setFormData] = useState({
     startingLocation: 'Mumbai',
-    destination: 'Lonavala',
+    destination: 'Alibaug',
     travelers: '2',
-    startDate: '2026-09-12',
-    endDate: '2026-09-13',
+    startDate: '2026-10-03',
+    endDate: '2026-10-04',
     budget: '5000',
-    preference: 'Nature',
-    vibe: 'Nature'
+    preference: 'Beach',
+    vibe: 'Beach'
   });
 
   // AI Generation Loading State Steps
@@ -210,24 +210,11 @@ export default function WeekendPlannerApp() {
   // Generated Itinerary State
   const [generatedTrip, setGeneratedTrip] = useState(null);
 
-  // Saved Trips with localStorage persistence
+  // Saved Trips with localStorage persistence (Only Alibaug retained initially)
   const [savedTrips, setSavedTrips] = useState(() => {
     try {
       const saved = localStorage.getItem('weekend_saved_trips_v2');
       return saved ? JSON.parse(saved) : [
-        {
-          id: 'saved-1',
-          destination: 'Lonavala',
-          dates: '12–13 September',
-          travelers: 2,
-          budget: '₹3,400',
-          totalCostNumeric: 3400,
-          distance: '83 km',
-          travelTime: '2h 15m',
-          rating: 4.8,
-          image: 'https://images.unsplash.com/photo-1584811644167-a5448bb444ff?auto=format&fit=crop&w=600&q=80',
-          vibe: 'Nature'
-        },
         {
           id: 'saved-2',
           destination: 'Alibaug',
@@ -269,14 +256,13 @@ export default function WeekendPlannerApp() {
           clearInterval(interval);
           setTimeout(() => {
             setIsGenerating(false);
-            // Build tailored trip object
-            const destObj = DESTINATIONS.find(d => d.name.toLowerCase() === formData.destination.toLowerCase()) || DESTINATIONS[0];
+            const destObj = DESTINATIONS.find(d => d.name.toLowerCase() === formData.destination.toLowerCase()) || DESTINATIONS[1];
             setGeneratedTrip({
               id: Date.now(),
               destination: destObj.name,
               region: destObj.region,
               image: destObj.heroImage,
-              dates: '12–13 September',
+              dates: '3–4 October',
               travelers: formData.travelers,
               budgetLimit: Number(formData.budget),
               totalCost: destObj.budgetNumeric,
@@ -296,23 +282,23 @@ export default function WeekendPlannerApp() {
                 {
                   day: 'SATURDAY',
                   items: [
-                    { time: '07:00 AM', activity: `Depart from ${formData.startingLocation}`, location: `${formData.startingLocation} Expressway`, duration: '2h 15m', cost: '₹600 (Fuel/Bus)', notes: 'Early start beats weekend traffic.' },
-                    { time: '09:30 AM', activity: 'Scenic Breakfast & Local Chai', location: 'Highway Panorama Café', duration: '45m', cost: '₹400', notes: 'Try local misal pav or fresh sandwiches.' },
-                    { time: '11:00 AM', activity: 'Explore Landmark Viewpoint', location: `${destObj.name} Scenic Ridge`, duration: '2h', cost: '₹150 entry', notes: 'Breathtaking valley views and photo spots.' },
-                    { time: '01:30 PM', activity: 'Traditional Regional Lunch', location: 'The Valley Diner', duration: '1h 15m', cost: '₹800', notes: 'Sample signature regional thalis.' },
-                    { time: '03:30 PM', activity: 'Hotel Check-in & Relaxation', location: `${destObj.name} Boutique Retreat`, duration: '1h 30m', cost: 'Included in stay', notes: 'Unwind and freshen up.' },
-                    { time: '05:30 PM', activity: 'Golden Hour Sunset Experience', location: 'Sunset Point Horizon', duration: '1h 30m', cost: 'Free', notes: 'Bring your camera or phone for gorgeous light.' },
-                    { time: '08:00 PM', activity: 'Candlelight Dinner & Local Treats', location: 'Downtown Bistro', duration: '2h', cost: '₹1,200', notes: 'Relaxing ambiance with local dessert specialties.' }
+                    { time: '08:00 AM', activity: `Depart from ${formData.startingLocation}`, location: 'Gateway of India / Ro-Ro Ferry', duration: '1h 30m', cost: '₹500 Ferry Ticket', notes: 'Enjoy the coastal breeze across the harbor.' },
+                    { time: '10:00 AM', activity: 'Coastal Breakfast & Coconut Water', location: 'Mandwa Jetty Cafe', duration: '45m', cost: '₹350', notes: 'Fresh local breakfast options.' },
+                    { time: '11:30 AM', activity: 'Beach Villa Check-in & Relax', location: `${destObj.name} Beachfront Stay`, duration: '1h 30m', cost: 'Included', notes: 'Settle into your coastal room.' },
+                    { time: '01:30 PM', activity: 'Authentic Seafood Thali Lunch', location: 'Local Coastal Diner', duration: '1h 15m', cost: '₹900', notes: 'Try signature prawn or surmai preparations.' },
+                    { time: '03:30 PM', activity: 'Explore Historic Sea Fort', location: 'Kolaba Fort (Low Tide Walk)', duration: '2h', cost: '₹50 entry', notes: 'Walk across the shallow sea bed during low tide.' },
+                    { time: '06:00 PM', activity: 'Sunset Shore Stroll', location: 'Alibaug Main Beach', duration: '1h 30m', cost: 'Free', notes: 'Stunning evening sky colors over the Arabian Sea.' },
+                    { time: '08:30 PM', activity: 'Beachside Dinner', location: 'Seaside Shack Restaurant', duration: '2h', cost: '₹1,100', notes: 'Relaxed atmosphere under string lights.' }
                   ]
                 },
                 {
                   day: 'SUNDAY',
                   items: [
-                    { time: '08:30 AM', activity: 'Delightful Open-Air Breakfast', location: 'Resort Garden Patio', duration: '1h', cost: 'Included', notes: 'Fresh tropical fruits and artisanal coffee.' },
-                    { time: '10:00 AM', activity: 'Cultural / Nature Heritage Walk', location: `${destObj.name} Trails & Market`, duration: '2h', cost: '₹300', notes: 'Pick up souvenirs, local jams, or crafts.' },
-                    { time: '12:30 PM', activity: 'Leisurely Farewell Lunch', location: 'Garden Terrace Cafe', duration: '1h 30m', cost: '₹900', notes: 'Relaxed final meal before checkout.' },
-                    { time: '02:30 PM', activity: 'Hotel Checkout & Souvenir Stop', location: 'Local Artisan Market', duration: '1h', cost: '₹500', notes: 'Purchase regional chikki, snacks, or crafts.' },
-                    { time: '04:00 PM', activity: 'Return Journey to ' + formData.startingLocation, location: 'Main Highway Route', duration: '2h 30m', cost: '₹600', notes: 'Smooth comfortable evening drive back.' }
+                    { time: '08:00 AM', activity: 'Morning Sunrise Beach Walk', location: 'Nagaon Shoreline', duration: '1h', cost: 'Free', notes: 'Peaceful morning air and calm waves.' },
+                    { time: '09:30 AM', activity: 'Traditional Breakfast & Coffee', location: 'Village Bakery', duration: '45m', cost: '₹300', notes: 'Local baked snacks and hot filter coffee.' },
+                    { time: '11:00 AM', activity: 'Local Spice & Coconut Market Visit', location: 'Alibaug Town Bazaar', duration: '1h 30m', cost: '₹400', notes: 'Pick up homemade coconut sweets and spices.' },
+                    { time: '01:00 PM', activity: 'Leisurely Farewell Lunch', location: 'Garden Courtyard Restaurant', duration: '1h 30m', cost: '₹800', notes: 'Final relaxing meal before checkout.' },
+                    { time: '03:30 PM', activity: 'Ferry Return to ' + formData.startingLocation, location: 'Mandwa Jetty', duration: '1h 30m', cost: '₹500', notes: 'Scenic boat ride back to the city.' }
                   ]
                 }
               ]
@@ -362,7 +348,7 @@ export default function WeekendPlannerApp() {
   return (
     <div className="min-h-screen bg-[#FAFAF9] text-[#1C1917] font-sans antialiased selection:bg-[#0F766E] selection:text-white flex flex-col justify-between">
       
-      {/* --- 11. RESPONSIVE NAVIGATION --- */}
+      {/* NAVIGATION BAR */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#E7E5E4] px-6 lg:px-12 py-4 flex items-center justify-between transition-all">
         <div 
           onClick={() => setCurrentView('home')} 
@@ -414,7 +400,6 @@ export default function WeekendPlannerApp() {
           >
             ✨ Plan My Weekend
           </button>
-          {/* Mobile hamburger menu toggle or saved icon */}
           <button 
             onClick={() => setCurrentView('saved')} 
             className="md:hidden p-2 rounded-xl bg-[#F5F5F4] text-[#44403C] relative"
@@ -432,7 +417,7 @@ export default function WeekendPlannerApp() {
       {/* --- MAIN CONTENT CONTAINER --- */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 lg:px-12 py-8">
 
-        {/* --- 1. LOADING STATE OVERLAY (PRD Section 13) --- */}
+        {/* LOADING STATE OVERLAY */}
         {isGenerating && (
           <div className="fixed inset-0 z-50 bg-white/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center animate-fadeIn">
             <div className="w-16 h-16 rounded-2xl bg-[#0F766E]/10 flex items-center justify-center text-[#0F766E] text-2xl mb-6 animate-pulse">
@@ -445,7 +430,6 @@ export default function WeekendPlannerApp() {
               Our travel AI is combining distance algorithms, live budget models, and expert itineraries for {formData.destination}.
             </p>
 
-            {/* Animated Step checklist */}
             <div className="space-y-3 text-left w-full max-w-sm bg-white p-6 rounded-2xl border border-[#E7E5E4] shadow-sm">
               {loadingStepsText.map((stepText, idx) => {
                 const isComplete = idx < loadingStep;
@@ -463,11 +447,11 @@ export default function WeekendPlannerApp() {
           </div>
         )}
 
-        {/* --- 2. HOME VIEW (Hero + Vibe Filters + Destination Discovery) --- */}
+        {/* HOME VIEW */}
         {currentView === 'home' && (
           <div className="space-y-16 animate-fadeIn">
             
-            {/* HERO SECTION (PRD Section 2) */}
+            {/* HERO SECTION */}
             <div className="relative rounded-3xl overflow-hidden bg-[#1C1917] text-white p-8 md:p-16 shadow-xl flex flex-col justify-end min-h-[500px]">
               <div className="absolute inset-0 z-0">
                 <img 
@@ -508,7 +492,7 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* VIBE FILTERS SECTION (PRD Section 6) */}
+            {/* VIBE FILTERS SECTION */}
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
@@ -546,14 +530,13 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* DESTINATION DISCOVERY SECTION (PRD Section 5) */}
+            {/* DESTINATION DISCOVERY SECTION */}
             <div id="destinations-grid" className="space-y-6 pt-4">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                   <h2 className="text-2xl font-serif font-medium text-[#1C1917]">Popular Weekend Escapes</h2>
                   <p className="text-sm text-[#78716C] mt-1">Hand-picked getaways within a comfortable driving or ferry distance.</p>
                 </div>
-                {/* Search Input */}
                 <div className="w-full md:w-72">
                   <input 
                     type="text"
@@ -630,7 +613,7 @@ export default function WeekendPlannerApp() {
           </div>
         )}
 
-        {/* --- 3. WEEKEND PLANNER VIEW (PRD Section 3) --- */}
+        {/* WEEKEND PLANNER VIEW */}
         {currentView === 'planner' && (
           <div className="max-w-3xl mx-auto space-y-8 animate-fadeIn">
             <div>
@@ -641,7 +624,6 @@ export default function WeekendPlannerApp() {
 
             <form onSubmit={handleGenerateTrip} className="bg-white p-8 md:p-12 rounded-3xl border border-[#E7E5E4] shadow-sm space-y-8">
               
-              {/* Row 1: Starting Location & Destination */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-[#78716C] mb-2">Starting Location</label>
@@ -668,7 +650,6 @@ export default function WeekendPlannerApp() {
                 </div>
               </div>
 
-              {/* Row 2: Dates & Travelers */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-[#78716C] mb-2">Start Date</label>
@@ -703,7 +684,6 @@ export default function WeekendPlannerApp() {
                 </div>
               </div>
 
-              {/* Row 3: Budget Limit */}
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-[#78716C]">Maximum Budget Limit (₹)</label>
@@ -720,7 +700,6 @@ export default function WeekendPlannerApp() {
                 />
               </div>
 
-              {/* Row 4: Weekend Vibe selectable cards */}
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#78716C] mb-3">Select Weekend Vibe</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -737,7 +716,6 @@ export default function WeekendPlannerApp() {
                 </div>
               </div>
 
-              {/* Submit CTA */}
               <div className="pt-4">
                 <button 
                   type="submit"
@@ -751,11 +729,10 @@ export default function WeekendPlannerApp() {
           </div>
         )}
 
-        {/* --- 4, 7, 8, 9. GENERATED RESULTS & ITINERARY VIEW --- */}
+        {/* GENERATED RESULTS & ITINERARY VIEW */}
         {currentView === 'results' && generatedTrip && (
           <div className="space-y-12 animate-fadeIn pb-16">
             
-            {/* Top Action Back Bar */}
             <div className="flex justify-between items-center">
               <button 
                 onClick={() => setCurrentView('planner')}
@@ -785,7 +762,7 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* TRIP SUMMARY CARD (PRD Section 9) */}
+            {/* TRIP SUMMARY CARD */}
             <div className="bg-white rounded-3xl border border-[#E7E5E4] p-8 md:p-12 shadow-sm space-y-8">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-[#F5F5F4]">
                 <div className="flex items-center gap-6">
@@ -805,7 +782,6 @@ export default function WeekendPlannerApp() {
                 </div>
               </div>
 
-              {/* Quick Trip Stats Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                 <div>
                   <span className="block text-xs uppercase tracking-wider text-[#78716C]">Dates</span>
@@ -826,7 +802,7 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* BUDGET BREAKDOWN SECTION (PRD Section 7) */}
+            {/* BUDGET BREAKDOWN SECTION */}
             <div className="bg-white rounded-3xl border border-[#E7E5E4] p-8 md:p-12 shadow-sm space-y-6">
               <div className="flex justify-between items-end">
                 <div>
@@ -836,7 +812,6 @@ export default function WeekendPlannerApp() {
                 <span className="text-sm font-bold text-[#0F766E]">Total: ₹{generatedTrip.totalCost.toLocaleString()}</span>
               </div>
 
-              {/* Progress bar breakdown */}
               <div className="space-y-4 pt-2">
                 <div className="h-4 w-full bg-[#FAFAF9] rounded-full overflow-hidden flex border border-[#E7E5E4]">
                   <div style={{ width: `${(generatedTrip.budgetBreakdown.stay / generatedTrip.totalCost) * 100}%` }} className="bg-[#0F766E]" title="Stay"></div>
@@ -874,7 +849,7 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* ROUTE / MAP VISUALIZATION SECTION (PRD Section 8) */}
+            {/* ROUTE / MAP VISUALIZATION SECTION */}
             <div className="bg-white rounded-3xl border border-[#E7E5E4] p-8 md:p-12 shadow-sm space-y-6">
               <div>
                 <h2 className="text-2xl font-serif font-medium text-[#1C1917]">Optimized Travel Route</h2>
@@ -885,19 +860,19 @@ export default function WeekendPlannerApp() {
                 <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-[#1C1917]">
                   <span className="px-4 py-2 rounded-xl bg-white border border-[#E7E5E4] shadow-sm">{generatedTrip.startingLocation}</span>
                   <span className="text-[#0F766E] font-bold">↓</span>
-                  <span className="px-4 py-2 rounded-xl bg-white border border-[#E7E5E4] shadow-sm">Scenic Expressway</span>
+                  <span className="px-4 py-2 rounded-xl bg-white border border-[#E7E5E4] shadow-sm">Ferry / Coastal Route</span>
                   <span className="text-[#0F766E] font-bold">↓</span>
                   <span className="px-4 py-2 rounded-xl bg-[#0F766E] text-white shadow-sm">{generatedTrip.destination}</span>
                   <span className="text-[#0F766E] font-bold">↓</span>
-                  <span className="px-4 py-2 rounded-xl bg-white border border-[#E7E5E4] shadow-sm">Local Viewpoints</span>
+                  <span className="px-4 py-2 rounded-xl bg-white border border-[#E7E5E4] shadow-sm">Beachfront & Forts</span>
                 </div>
                 <div className="text-xs text-[#78716C] font-medium bg-white px-4 py-2.5 rounded-xl border border-[#E7E5E4]">
-                  Total Distance: <strong className="text-[#1C1917]">{generatedTrip.distance}</strong> • Est Drive: <strong className="text-[#1C1917]">{generatedTrip.travelTime}</strong>
+                  Total Distance: <strong className="text-[#1C1917]">{generatedTrip.distance}</strong> • Est Time: <strong className="text-[#1C1917]">{generatedTrip.travelTime}</strong>
                 </div>
               </div>
             </div>
 
-            {/* AI ITINERARY VERTICAL TIMELINE (PRD Section 4) */}
+            {/* AI ITINERARY VERTICAL TIMELINE */}
             <div className="bg-white rounded-3xl border border-[#E7E5E4] p-8 md:p-12 shadow-sm space-y-8">
               <div>
                 <h2 className="text-2xl font-serif font-medium text-[#1C1917]">Your AI Itinerary Timeline</h2>
@@ -914,7 +889,6 @@ export default function WeekendPlannerApp() {
                     <div className="relative pl-6 md:pl-8 border-l-2 border-[#E7E5E4] space-y-8">
                       {dayBlock.items.map((item, iIdx) => (
                         <div key={iIdx} className="relative group">
-                          {/* Timeline dot */}
                           <div className="absolute -left-[31px] md:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-white border-4 border-[#0F766E] shadow-sm"></div>
 
                           <div className="bg-[#FAFAF9] p-6 rounded-2xl border border-[#E7E5E4] hover:border-[#0F766E] transition-all space-y-2">
@@ -937,7 +911,7 @@ export default function WeekendPlannerApp() {
           </div>
         )}
 
-        {/* --- 5. DESTINATION DETAILS VIEW --- */}
+        {/* DESTINATION DETAILS VIEW */}
         {currentView === 'details' && activeDestination && (
           <div className="max-w-4xl mx-auto space-y-12 animate-fadeIn pb-16">
             <button 
@@ -947,7 +921,6 @@ export default function WeekendPlannerApp() {
               ← Back to Discovery Grid
             </button>
 
-            {/* Hero Detail Header */}
             <div className="space-y-6">
               <div className="relative rounded-3xl overflow-hidden h-[420px] shadow-xl">
                 <img src={activeDestination.heroImage} alt={activeDestination.name} className="w-full h-full object-cover" />
@@ -961,7 +934,6 @@ export default function WeekendPlannerApp() {
                 </div>
               </div>
 
-              {/* Quick Facts Strip */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white p-6 rounded-2xl border border-[#E7E5E4] shadow-sm">
                 <div>
                   <span className="block text-xs uppercase tracking-wider text-[#78716C]">Travel Time</span>
@@ -982,7 +954,6 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* Highlights */}
             <div className="bg-white p-8 md:p-12 rounded-3xl border border-[#E7E5E4] space-y-6 shadow-sm">
               <h2 className="text-2xl font-serif font-medium text-[#1C1917]">Top Highlights</h2>
               <div className="space-y-4">
@@ -997,7 +968,6 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* Weekend Rhythm */}
             <div className="bg-white p-8 md:p-12 rounded-3xl border border-[#E7E5E4] space-y-6 shadow-sm">
               <h2 className="text-2xl font-serif font-medium text-[#1C1917]">Suggested Weekend Rhythm</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1016,7 +986,6 @@ export default function WeekendPlannerApp() {
               </div>
             </div>
 
-            {/* Action CTA Bar */}
             <div className="sticky bottom-6 bg-[#1C1917] text-white p-6 rounded-2xl shadow-2xl flex flex-wrap items-center justify-between gap-4 z-40">
               <div>
                 <h3 className="font-serif text-lg">Ready to visit {activeDestination.name}?</h3>
@@ -1035,7 +1004,7 @@ export default function WeekendPlannerApp() {
           </div>
         )}
 
-        {/* --- 10, 14. SAVED TRIPS VIEW & EMPTY STATES --- */}
+        {/* SAVED TRIPS VIEW & EMPTY STATES */}
         {currentView === 'saved' && (
           <div className="space-y-8 animate-fadeIn pb-16">
             <div>
@@ -1045,7 +1014,6 @@ export default function WeekendPlannerApp() {
             </div>
 
             {savedTrips.length === 0 ? (
-              /* EMPTY STATE (PRD Section 14) */
               <div className="text-center py-20 bg-white rounded-3xl border border-[#E7E5E4] space-y-6 shadow-sm max-w-lg mx-auto">
                 <div className="w-16 h-16 mx-auto rounded-full bg-[#0F766E]/10 text-[#0F766E] flex items-center justify-center text-2xl">
                   ❤️
@@ -1111,7 +1079,7 @@ export default function WeekendPlannerApp() {
 
       </main>
 
-      {/* --- FOOTER --- */}
+      {/* FOOTER */}
       <footer className="bg-white border-t border-[#E7E5E4] px-6 lg:px-12 py-8 mt-16 text-center text-xs text-[#78716C] space-y-2">
         <p className="font-medium text-[#44403C]">Weekend Escapes — AI Travel Tech Product</p>
         <p>© {new Date().getFullYear()} Weekend Escapes Inc. Designed for effortless short breaks.</p>
